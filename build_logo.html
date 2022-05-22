@@ -1,0 +1,29 @@
+<html>
+    <head>
+
+        <title>制作app启动图</title>
+        
+    </head>
+
+    <body>
+        <canvas width="1080" height="1920" id="myCanvas"></canvas>
+        <img src="https://static.q-plants.com/1.png" id="image" style="width: 192px;height: 192px; display: none;">
+        <script>
+            var canvas =document.getElementById("myCanvas");
+            var image = document.getElementById("image");
+            var ctx = canvas.getContext("2d");
+            var width = canvas.width,height=canvas.height;
+            var pw = 512;
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font="24px Georgia";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            var text = "深圳余亩荞麦数字科技有限公司";
+            ctx.fillStyle="#736D6D";
+            //ctx.fillText(text,width/2-text.length*13,height-240);
+            window.onload = ()=>{
+                ctx.drawImage(image,(width-pw)/2,(height-pw)/2,pw,pw);
+            }
+            
+        </script>
+    </body>
+</html>

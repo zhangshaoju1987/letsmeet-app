@@ -1,0 +1,74 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.joemeet.app">
+
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.BIND_TELECOM_CONNECTION_SERVICE" tools:ignore="ProtectedPermissions" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+    <uses-feature android:name="android.hardware.microphone" android:required="false" />
+
+
+
+    <application
+      android:name="com.joemeet.app.MainApplication"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:roundIcon="@mipmap/ic_launcher_round"
+      android:allowBackup="false"
+      android:theme="@style/AppTheme">
+
+        <activity
+        android:name="com.joemeet.app.MainActivity"
+        android:label="@string/app_name"
+        android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
+        android:launchMode="singleTask"
+        android:windowSoftInputMode="adjustResize">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+      </activity>
+      <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
+
+        <!--让app保持活动状态，即便转入后台-->
+        <service android:name="com.voximplant.foregroundservice.VIForegroundService"
+            android:foregroundServiceType="connectedDevice|dataSync|mediaPlayback|mediaProjection|location|phoneCall"/>
+        <!--
+            https://www.codenong.com/cs106644505/
+            https://www.twilio.com/docs/video/android-v6-screen-capture
+        -->
+        <!--解决android10，屏幕分享黑屏的问题-->
+        <!--        <service
+                        android:name=".ScreenCapturerService"
+                        android:enabled="true"
+                        android:foregroundServiceType="mediaProjection"
+                        tools:targetApi="q"
+                        android:exported="true"/>
+        -->
+        <service android:name="io.wazo.callkeep.VoiceConnectionService"
+            android:label="Wazo"
+            android:permission="android.permission.BIND_TELECOM_CONNECTION_SERVICE"
+            android:foregroundServiceType="phoneCall"
+            >
+            <intent-filter>
+                <action android:name="android.telecom.ConnectionService" />
+            </intent-filter>
+        </service>
+        <service android:name="io.wazo.callkeep.RNCallKeepBackgroundMessagingService" />
+    </application>
+
+</manifest>
